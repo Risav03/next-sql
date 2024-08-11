@@ -67,70 +67,73 @@ export default function TaskDisplay () {
         console.log(err);
     }
    }
+
+   const filterTasksByStatus = (tasks: DataType[], status: string) => {
+    return tasks.filter(task => task.status === status);
+  };
+  
+  const getCategoriesWithTasks = (tasks: DataType[], categories: string[]) => {
+    return categories.filter(category => 
+      tasks.some(task => task.taskCategory.toUpperCase() === category.toUpperCase())
+    );
+  };
    
     useEffect(()=>{
         fetchTasks()
     },[])
 
-  return (
-    <div className='w-screen grid grid-flow-col grid-cols-3 px-10'>
-        <div className='border-r-[1px] border-[#0f223b] px-4'>
-            <h3 className='text-xl font-semibold text-gray-300' >Pending</h3>
+    return (
+        <div className='w-screen grid grid-flow-col grid-cols-3 px-10'>
+          <div className='border-r-[1px] border-[#0f223b] px-4'>
+            <h3 className='text-xl font-semibold text-gray-300'>Pending</h3>
             <div className='mt-10'>
-                {pending > 0 && categories.map((category:string)=>(
-                    <div className='my-10'>
-                        <h2 className='text-md text-gray-400 font-semibold'>{category}</h2>
-                        <div className='flex gap-2 my-4 flex-wrap'>
-
-                        {tasks.map((item:DataType, i)=>(
-                        <>
-                            {item.status == "Pending" && item.taskCategory == category && <TaskCard id={item.id} status={"Take up"} taskName={item.taskName} />}
-                        </>
-                ))}
+              {pending > 0 && getCategoriesWithTasks(filterTasksByStatus(tasks, "Pending"), categories).map((category: string) => (
+                <div key={category} className='my-10'>
+                  <h2 className='text-md text-gray-400 font-semibold'>{category}</h2>
+                  <div className='flex gap-2 my-4 flex-wrap'>
+                    {tasks.map((item: DataType, i) => (
+                      item.status === "Pending" && item.taskCategory === category && 
+                      <TaskCard  id={item.id} status={"Take up"} taskName={item.taskName} />
+                    ))}
+                  </div>
                 </div>
-                    </div>  
-                ))}
-                
+              ))}
             </div>
-        </div>
-        <div className='border-r-[1px] border-[#0f223b] px-4' >
-            <h3 className='text-xl font-semibold text-gray-300' >Working</h3>
+          </div>
+          
+          <div className='border-r-[1px] border-[#0f223b] px-4'>
+            <h3 className='text-xl font-semibold text-gray-300'>Working</h3>
             <div className='mt-10'>
-                {started > 0 && categories.map((category:string)=>(
-                    <div className='my-10'>
-                        <h2 className='text-md text-gray-400 font-semibold'>{category}</h2>
-                        <div className='flex gap-2 my-4 flex-wrap'>
-
-                        {tasks.map((item:DataType, i)=>(
-                        <>
-                            {item.status == "Started" && item.taskCategory == category && <TaskCard id={item.id} status={"Finish"} taskName={item.taskName} />}
-                        </>
-                ))}
+              {started > 0 && getCategoriesWithTasks(filterTasksByStatus(tasks, "Started"), categories).map((category: string) => (
+                <div key={category} className='my-10'>
+                  <h2 className='text-md text-gray-400 font-semibold'>{category}</h2>
+                  <div className='flex gap-2 my-4 flex-wrap'>
+                    {tasks.map((item: DataType, i) => (
+                      item.status === "Started" && item.taskCategory === category && 
+                      <TaskCard id={item.id} status={"Finish"} taskName={item.taskName} />
+                    ))}
+                  </div>
                 </div>
-                    </div>  
-                ))}
-                
+              ))}
             </div>
-        </div>
-        <div className=' px-4' >
-            <h3 className='text-xl font-semibold text-gray-300' >Completed</h3>
+          </div>
+          
+          <div className='px-4'>
+            <h3 className='text-xl font-semibold text-gray-300'>Completed</h3>
             <div className='mt-10'>
-                {ended > 0 && categories.map((category:string)=>(
-                    <div className='my-10'>
-                        <h2 className='text-md text-gray-400 font-semibold'>{category}</h2>
-                        <div className='flex gap-2 my-4 flex-wrap'>
-
-                        {tasks.map((item:DataType, i)=>(
-                        <>
-                            {item.status == "Ended" && item.taskCategory == category && <TaskCard id={item.id} status={"Delete"} taskName={item.taskName} />}
-                        </>
-                ))}
+              {ended > 0 && getCategoriesWithTasks(filterTasksByStatus(tasks, "Ended"), categories).map((category: string) => (
+                <div key={category} className='my-10'>
+                  <h2 className='text-md text-gray-400 font-semibold'>{category}</h2>
+                  <div className='flex gap-2 my-4 flex-wrap'>
+                    {tasks.map((item: DataType, i) => (
+                      item.status === "Ended" && item.taskCategory === category && 
+                      <TaskCard id={item.id} status={"Delete"} taskName={item.taskName} />
+                    ))}
+                  </div>
                 </div>
-                    </div>  
-                ))}
-                
+              ))}
             </div>
+          </div>
         </div>
-    </div>
-  )
+      );
 }

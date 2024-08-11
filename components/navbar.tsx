@@ -16,6 +16,7 @@ export const Navbar = () => {
             await axios.post("/api/createTask", {taskName, taskCategory}).then((res)=>{
                 console.log(res);
                 setModal(false);
+                window.location.reload();
             })
         }
         catch(err){
