@@ -80,11 +80,11 @@ export default function TaskDisplay () {
                 {pending > 0 && categories.map((category:string)=>(
                     <div className='my-10'>
                         <h2 className='text-md text-gray-400 font-semibold'>{category}</h2>
-                        <div className='flex gap-2 my-4'>
+                        <div className='flex gap-2 my-4 flex-wrap'>
 
                         {tasks.map((item:DataType, i)=>(
                         <>
-                            {item.status == "Pending" && item.taskCategory == category && <TaskCard status={"Take up"} taskName={item.taskName} />}
+                            {item.status == "Pending" && item.taskCategory == category && <TaskCard id={item.id} status={"Take up"} taskName={item.taskName} />}
                         </>
                 ))}
                 </div>
@@ -99,11 +99,11 @@ export default function TaskDisplay () {
                 {started > 0 && categories.map((category:string)=>(
                     <div className='my-10'>
                         <h2 className='text-md text-gray-400 font-semibold'>{category}</h2>
-                        <div className='flex gap-2 my-4'>
+                        <div className='flex gap-2 my-4 flex-wrap'>
 
                         {tasks.map((item:DataType, i)=>(
                         <>
-                            {item.status == "Started" && item.taskCategory == category && <TaskCard status={"Finish"} taskName={item.taskName} />}
+                            {item.status == "Started" && item.taskCategory == category && <TaskCard id={item.id} status={"Finish"} taskName={item.taskName} />}
                         </>
                 ))}
                 </div>
@@ -118,11 +118,11 @@ export default function TaskDisplay () {
                 {ended > 0 && categories.map((category:string)=>(
                     <div className='my-10'>
                         <h2 className='text-md text-gray-400 font-semibold'>{category}</h2>
-                        <div className='flex gap-2 my-4'>
+                        <div className='flex gap-2 my-4 flex-wrap'>
 
                         {tasks.map((item:DataType, i)=>(
                         <>
-                            {item.status == "Ended" && item.taskCategory == category && <TaskCard status={"Delete"} taskName={item.taskName} />}
+                            {item.status == "Ended" && item.taskCategory == category && <TaskCard id={item.id} status={"Delete"} taskName={item.taskName} />}
                         </>
                 ))}
                 </div>
